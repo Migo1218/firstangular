@@ -1,75 +1,78 @@
-<div class="row">
-  <div class="col">
-    <form [formGroup]="form1" (ngSubmit)="busqueda()">
+<div class="container mt-5">
+  <div class="row">
+    <div class="col">
+      <form [formGroup]="form1" (ngSubmit)="busqueda()">
+        <div class="mb-3 row">
+          <label class="col-sm-3 col-form-label">Buscar</label>
+          <div class="col-sm-9">
+            <div class="input-group mb-1">
+              <input
+                class="form-control"
+                type="text"
+                placeholder="busqueda"
+                formControlName="busqueda"
+              />
+              <button class="btn btn-outline-primary" type="submit">
+                Buscar
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <div class="list-group" *ngFor="let drinks of data">
+    <button
+      type="button"
+      class="list-group-item list-group-item-action"
+      aria-current="true"
+      (click)="agregarFavApi(drinks.strDrink)"
+    >
+      {{drinks.strDrink}}
+    </button>
+  </div>
+  
+  <!-- Agregar Licores Favoritos -->
+  <form autocomplete="off" [formGroup]="miFormulario">
+  <div class="mb-3 row">
+    <label class="col-sm-3 col-form-label">Agregar</label>
+    <div class="col-sm-9">
+      <div class="input-group">
+        <input
+          class="form-control"
+          [formControl]="nuevoFavorito"
+          placeholder="Agregar favorito"
+          (keyup.enter)="agregarFavorito()"
+        />
+        <button
+          class="btn btn-outline-primary"
+          type="button"
+          (click)="agregarFavorito()"
+        >
+          Agregar
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Licores Agregados -->
+  <div class="row">
+    <div class="col">
       <div class="mb-3 row">
-        <label class="col-sm-3 col-form-label">Buscar</label>
-        <div class="col-sm-9">
-          <div class="input-group mb-1">
-            <input
-              class="form-control"
-              type="text"
-              placeholder="busqueda"
-              formControlName="busqueda"
-            />
-            <button class="btn btn-outline-primary" type="submit">
-              Buscar
-            </button>
+        <label class="col-sm-3 col-form-label">Licores Favoritos</label>
+        <div class="col-sm-9" formArrayName="favoritos">
+          <div
+            class="input-group mb-1"
+            *ngFor="let favorito of favoritosArr.controls; let i = index"
+          >
+            <input class="form-control" [formControlName]="i" />
+            <button class="btn btn-outline-danger" type="button" (click)="eliminar(i)">Eliminar</button>
           </div>
         </div>
       </div>
-    </form>
-  </div>
-</div>
-
-<div class="list-group" *ngFor="let drinks of data">
-  <button
-    type="button"
-    class="list-group-item list-group-item-action"
-    aria-current="true"
-    (click)="agregarFavApi(drinks.strDrink)"
-  >
-    {{drinks.strDrink}}
-  </button>
-</div>
-
-<!-- Agregar Licores Favoritos -->
-<form autocomplete="off" [formGroup]="miFormulario">
-<div class="mb-3 row">
-  <label class="col-sm-3 col-form-label">Agregar</label>
-  <div class="col-sm-9">
-    <div class="input-group">
-      <input
-        class="form-control"
-        [formControl]="nuevoFavorito"
-        placeholder="Agregar favorito"
-        (keyup.enter)="agregarFavorito()"
-      />
-      <button
-        class="btn btn-outline-primary"
-        type="button"
-        (click)="agregarFavorito()"
-      >
-        Agregar
-      </button>
     </div>
   </div>
+  </form>
 </div>
 
-<!-- Licores Agregados -->
-<div class="row">
-  <div class="col">
-    <div class="mb-3 row">
-      <label class="col-sm-3 col-form-label">Licores Favoritos</label>
-      <div class="col-sm-9" formArrayName="favoritos">
-        <div
-          class="input-group mb-1"
-          *ngFor="let favorito of favoritosArr.controls; let i = index"
-        >
-          <input class="form-control" [formControlName]="i" />
-          <button class="btn btn-outline-danger" type="button" (click)="eliminar(i)">Eliminar</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-</form>
